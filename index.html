@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Hambúrguer sem Efeito de Brilho</title>
+  
+  <!-- Importando Google Fonts e Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* Estilos básicos */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Estilo do menu hambúrguer */
+    .menu-hamburguer {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0.9;
+    }
+
+    .menu-hamburguer .linha {
+      width: 35px;
+      height: 4px;
+      background-color: black;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: transform 0.4s ease, background-color 0.4s ease;
+    }
+
+    /* Animação do ícone de hambúrguer quando ativo */
+    body.menu-ativo .menu-hamburguer .linha:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+      background-color: white;
+    }
+    body.menu-ativo .menu-hamburguer .linha:nth-child(2) {
+      opacity: 0;
+    }
+    body.menu-ativo .menu-hamburguer .linha:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+      background-color: white;
+    }
+
+    /* Estilo da barra lateral (menu) */
+    .menu-lateral {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 64, 128, 0.9);
+      overflow-x: hidden;
+      transition: width 0.5s ease;
+      padding-top: 60px;
+    }
+
+    .menu-lateral ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0; /* Remove o espaçamento */
+    }
+
+    /* Botões com efeito de transformação de tamanho */
+    .menu-lateral ul li {
+      padding: 0; /* Remove o espaçamento interno */
+      text-align: left;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      width: 100%;
+    }
+
+    body.menu-ativo .menu-lateral ul li {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.1s;
+    }
+
+    .menu-lateral ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      letter-spacing: 1px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      transition: color 0.3s ease, transform 0.3s ease;
+      width: 100%;
+      height: 80px; /* Aumenta a altura dos botões */
+      box-sizing: border-box; /* Garante que padding não afete a largura */
+    }
+
+    /* Ícones alinhados à esquerda */
+    .menu-lateral ul li a i {
+      font-size: 24px;
+      margin-right: 15px;
+    }
+
+    /* Efeito de transformação de tamanho */
+    .menu-lateral ul li a:hover {
+      color: #00ffff;
+      transform: scale(1.05); /* Reduzi o scale para 1.05 para ficar mais suave */
+    }
+
+    /* Conteúdo da página */
+    .conteudo {
+      transition: margin-left 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+      padding: 20px;
+    }
+
+    /* Estado quando o menu está ativo */
+    body.menu-ativo {
+      background-color: #003366;
+      color: white;
+    }
+
+    body.menu-ativo .menu-lateral {
+      width: 300px;
+    }
+
+    body.menu-ativo .conteudo {
+      margin-left: 300px;
+    }
+
+    /* Animação de entrada suave dos itens do menu */
+    body.menu-ativo .menu-lateral ul li:nth-child(1) {
+      transition-delay: 0.2s;
+    }
+
+    body.menu-ativo .menu-lateral ul li:nth-child(2) {
+      transition-delay: 0.3s;
+    }
+
+    body.menu-ativo .menu-lateral ul li:nth-child(3) {
+      transition-delay: 0.4s;
+    }
+
+    body.menu-ativo .menu-lateral ul li:nth-child(4) {
+      transition-delay: 0.5s;
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 768px) {
+      body.menu-ativo .menu-lateral {
+        width: 250px;
+      }
+
+      body.menu-ativo .conteudo {
+        margin-left: 250px;
+      }
+
+      .menu-hamburguer .linha {
+        width: 30px;
+        height: 3px;
+      }
+
+      .menu-lateral ul li a {
+        font-size: 18px;
+      }
+
+      .menu-lateral ul li a i {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body.menu-ativo .menu-lateral {
+        width: 220px;
+      }
+
+      body.menu-ativo .conteudo {
+        margin-left: 220px;
+      }
+
+      .menu-lateral ul li a {
+        font-size: 16px;
+      }
+
+      .menu-lateral ul li a i {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu hambúrguer -->
+  <div class="menu-hamburguer" onclick="toggleMenu()">
+    <div class="linha"></div>
+    <div class="linha"></div>
+    <div class="linha"></div>
+  </div>
+
+  <!-- Barra lateral do menu -->
+  <div id="menu" class="menu-lateral">
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+      <li><a href="#"><i class="fas fa-user"></i>Sobre</a></li>
+      <li><a href="#"><i class="fas fa-briefcase"></i>Serviços</a></li>
+      <li><a href="#"><i class="fas fa-envelope"></i>Contato</a></li>
+    </ul>
+  </div>
+
+  <!-- Conteúdo da página -->
+  <div id="conteudo" class="conteudo">
+    <h1>Bem-vindo ao meu site</h1>
+    <p>Aqui está o conteúdo da página inicial.</p>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('menu-ativo');
+    }
+  </script>
+</body>
+</html>
